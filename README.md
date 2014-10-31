@@ -5,6 +5,10 @@ powered by AJAX that allows you to easily show your images online,
 without complex databases or coding, allowing to have an up-and-running
 gallery in a few minutes.
 
+@Features
+ - TreeView for the gallery directories
+ - IPTC Captions from http://www.briancbecker.com/blog/projects/minishowcase-mod/
+ - FLV Support from http://www.briancbecker.com/blog/projects/minishowcase-mod/
 
 @BasedOn
 - Original based on http://minishowcase.net/ v09b142
@@ -13,12 +17,6 @@ gallery in a few minutes.
 @Icons
  - Plus/Minus Icon from http://www.famfamfam.com/
 
-@Features
- - TreeView for the gallery directories
- - IPTC Captions from http://www.briancbecker.com/blog/projects/minishowcase-mod/
- - FLV Support from http://www.briancbecker.com/blog/projects/minishowcase-mod/
- - 
-
 @ToDos & upcomming features:
  - Reenable $settings['show_empty_galleries'] = true;
     - TreeView
@@ -26,6 +24,7 @@ gallery in a few minutes.
     - PseudoTreeView
  - BuildIn Zip-Support
     - Zip-File should be treated as a normal directory
+ - Checkout http://people.via.ecp.fr/~jm/minishowcase-jm.html
 
 @ChangeLog
  - v2014-10-31:
