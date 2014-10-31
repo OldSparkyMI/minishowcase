@@ -1,0 +1,323 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<title>minishowcase | version 0.9 beta | instructions</title>
+	<style>
+		body { text-align:center; margin:0px; padding:0px; }
+		* { font-family: helvetica, verdana, sans-serif; }
+		h1, h2, h3, h4, h5, h6 { color:#369; }
+		h1 small { font-size: 0.6em; color:#69c; }
+		h1.big { font-size:2.2em; }
+		h1.title { color:#fff; background:#369; padding:20px; margin-top:0px; }
+		h1.title small { font-size: 0.5em; color:#fff; }
+		h2 { margin-top:60px; }
+		h3 { margin-top: 40px; }
+		p, li { color:#333; margin-bottom:20px; line-height:18px; }
+		code { color:#369; font-family: monaco, andalemono, 'andale mono', courier, monospace; font-size:1em; padding:0px 2px; }
+		blockquote { background:#fff; color:#369; border:1px solid #369; margin:10px; padding:10px; }
+		a { color:#369; }
+		a:hover { color#69c; }
+		h1 a { color:#fff; text-decoration:none; }
+		h2 a { font-size: 0.8em; color: #69f; text-decoration: none; }
+		h2 a:hover { color: #369; }
+		ul.tips li { color:#369; list-style: outside disc; }
+		ul.tips li code { color:#369; }
+		ol.list li { margin-bottom:4px; color:#666; }
+		div#wrapper { width: 600px; margin:auto; text-align:left; }
+		.main_menu li { color: #369; margin: 0; padding: 2px 0px; list-style: lower-roman outside;}
+		.main_menu li a { padding: 2px; }
+		.main_menu li a:hover { background: #def; }
+	</style>
+</head>
+<body>
+	<a name="top"></a>
+	<div id="wrapper">
+		<h1 class="title"><a href="http://minishowcase.frwrd.net">minishowcase</a> <small>version 0.9 beta</small><br />
+		<small>the super-easy gallery</small></h1>
+		
+		<h1>&nbsp;</h1>
+		
+		<h1 class="big">Installing and usage<br />
+		<small>for version 0.9 beta</small></h1>
+
+		<ul class="main_menu">
+			<li><a href="#requirements">Requirements</a></li>
+			<li><a href="#installing">Installing</a></li>
+			<li><a href="#tips_tricks">Tips &amp; Tricks</a></li>
+			<li><a href="#customisation">Customisation</a></li>
+			<li><a href="#themes">Themes</a></li>
+			<li><a href="#troubleshooting">Troubleshooting</a></li>
+			<li><a href="#contact">Contact</a></li>
+			<li><a href="#disclaimer">Disclaimer</a></li>
+			<li><a href="#legal">Legal stuff</a></li>
+		</ul>
+		
+		<p>&nbsp;</p>
+		
+		<a name="requirements"></a>
+		<h2>Requirements <a href="#top">^</a></h2>
+		<p>This is what you need to run this software:</p>
+		
+		<ul>
+		<li><strong>PHP scripting language:</strong> your server must have at least php v4.2.0 (I'm not 100% sure) installed. if you are unsure see below</li>
+		
+		<li><strong>GD/GD2 extension:</strong> either the GD or GD2 extension is required by PHP for manipulating images, hence you'll need it if you want the gallery to generate its own thumbnails on-the-fly. GD/GD2 are image manipulation extensions, are usually bundled with PHP for linux/unix/(windows?) and may just need to be enabled (by your Host, probably). if you are unsure see below</li>
+		
+		<li>If you don't have GD/GD2 installed, you can turn the <code>$settings['create_thumbnails']</code> variable to <code>false</code> in the <code>/config/settings.php</code> file. This way, the thumbnails will show as a scaled version of the main picture.</li>
+		
+		<li>An FTP account and client.</li>
+		
+		<li>The user's (the person looking at your photos) browser must be JavaScript Enabled (not just have it, but have it active) and support for AJAX (XmlHttpRequest Object or ActiveX). <blockquote>Note: This gallery is not compatible with IE 5.x Mac since it seems not to support AJAX. the gallery will show a message to the user explaining this (this browser is discontinued by Microsoft, so please do not ask support for it).</blockquote></li>
+		</ul>
+		
+		<p>&nbsp;</p>
+		<p><strong>Server Check:</strong> If you don't know if you have PHP installed in your host, try the following:</p>
+		
+		
+		<ul>
+		<li>Copy and paste the following into a text file:
+		<blockquote>&lt;?php phpinfo(); ?&gt;</blockquote></li>
+		
+		<li>Save the file as <code>test.php</code> and upload it via ftp to your webspace.</li>
+		
+		<li>Now fire up your favourite web browser and go to <code>http://yourdomain/path/to/file/test.php</code>. Scrolling down you will find the current version of PHP and whether or not GD/GD2 is installed.</li>
+		</ul>
+		
+		<a name="installing"></a>
+		<h2>Installing <a href="#top">^</a></h2>
+		<p>Once you have checked that your server meets the prerequisites as listed above you are ready to begin the installation.</p>
+		
+		<ul>
+		<li>Open the file <code>/config/settings.php</code> in a text editor (not Word! Notepad/TextEdit will do, saving as plain text) and make the changes you wish. Save and close the file.</li>
+		
+		<li>If you want to save thumbnails when created (for faster showing) just enable <code>$settings['create_thumbnails']</code> and <code>$settings['cache_thumbnails']</code> (check other variables that might be related). The thumbnail folders will be created inside the <code>/cache/</code> directory, named after the gallery starting with <code>cache_</code> (e.g. <code>/cache/cache_yourgallery/</code>).</li>
+		
+		<li>Put all the images for a gallery inside a folder, name it as you want the gallery to be named (Tip: better use underscores for spaces), and then put this folder inside the <code>/galleries/</code> folder. The <code>$settings['show_sub_galleries']</code> flag will let you display galleries you have organized in heiarchical folders (i.e. <code>/galleries/Traveling/Europe_2008/Rome</code>). Each gallery is treated individually in the sorting procedure and is listed with its full path. </li>
+		
+		<li>Upload the entire minishowcase folder to the location you have chosen in your webserver. Rename it if you want.
+		<blockquote>Note: be careful to upload images in data (binary) format, and text files in text (ascii) format.</blockquote></li>
+		
+		<li><b>IMPORTANT:</b> Set permissions for the <code>/cache/</code> directory to 0777.</li>
+		</ul>
+		
+		<p>That should be all!</p>
+		
+		
+		<a name="tips_tricks"></a>
+		<h2>Tips &amp; Tricks <a href="#top">^</a></h2>
+		
+		<ul class="tips">
+		
+			<li>
+				<h3>Videos & Movies</h3>
+				<p>Movies and videos can be added with your images and played direclty through the site. All videos are played at a constant size, which can be changed with the settings <code>$settings['video_size_width']</code> and <code>$settings['video_size_height']</code>. The default is <a href="http://youtube.com">YouTube</a> sized videos (480x360). 
+				
+				<blockquote>Note: Only FLV (Adobe Flash) videos are supported. To convert your videos, use <a href="http://www.erightsoft.net/SUPER.html">SUPER</a> (Windows) or ffmpeg (Linux/Mac/Windows) (see <a href="http://worldtv.com/blog/guides_tutorials/flv_converter.php">this tutorial</a> or <a href="http://www.luar.com.hk/blog/?p=670">this page</a> for more details on how to use ffmpeg). </blockquote></p>
+				
+				<p>By default, a generic camcorder icon is used for video thumbnails. If you want custom thumbnails of videos to show up on the gallery page, place a JPEG image with the same name as the video in the directory. For instance, if you have a video named <code>"Video.flv"</code>, you would put <code>"Video.jpg"</code> in the same directory. Note the case of the flv and jpg must match (i.e. <code>"Video.FLV" => "Video.JPG"</code> or <code>"Video.flv" => "Video.jpg"</code>). The Picasa picture manager makes creating these video thumbnail images easy. When you click the Export button, select the "Export movies using: First Frame" option. 
+				
+				<blockquote>The <a href="http://www.longtailvideo.com/players/jw-flv-player/">JW FLV Media Player</a> is used to play the FLV videos. You will need to make sure you abide by the <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">license</a>. If your usage is commerical (see <a href="http://www.longtailvideo.com/players/thankyou">details</a> on what counts as commercial), you will need to <a href="http://www.longtailvideo.com/players/order">buy a license</a> of JW FLV Media Player.</blockquote></p>
+			</li>
+		
+			<li>
+				<h3>Ordering galleries</h3>
+				<p>If you want to have your galleries to appear in a specific order in the menu, just prepend a number and a dash <code>NN-</code> to the folder name in the order you want. These numbers won't appear in the gallery title. In my opinion, a good practice is to append every gallery with the date formatted as <code>YYMMDD-</code> if you want to order them by date.
+				<blockquote>Note: this setting might not work in some OSes/Hosts. If this is your case, let me know in the <a href="http://minishowcase.frwrd.net/community/">community</a></blockquote></p>
+			</li>
+		
+			<li>
+				<h3>Ordering images</h3>
+				<p>If you want your images to appear in a specific order, prepend a number and a dash <code>NN-</code> to the image name. If you set <code>$settings['show_thumb_number']</code> to <code>false</code> those numbers won't show as part of the image caption.</p>
+			</li>
+		
+			<li>
+				<h3>Hide a gallery/image</h3>
+				<p>If you want a gallery temporarily not to show in the menu, just prepend an underscore (<code>_</code>) to the gallery folder name (eg. <code>/galleries/_yourgallery/</code>). The same applies to images you want temporarily not to appear in a gallery.</p>
+			</li>
+		
+			<li>
+				<h3>Show a description of a gallery</h3>
+				<p>If you want a description for the gallery, put it on a text file, name it <code>_info.txt</code> (the default name) and save it inside the gallery images folder.
+				<blockquote>Note: you can change this file's default name in the <code>/config/settings.php</code> file.</blockquote></p>
+			</li>
+		
+			<li>
+				<h3>Show a caption of an image</h3>
+				<p>If you want to show a description of the image, just name the image with the text you want to appear as a caption.
+				<blockquote>Note: Underscores (<code>_</code>) will be parsed and shown as spaces (<code> </code>), and Dashes (<code>-</code>) will be parsed and shown like this (<code> - </code>), eg. <code>my_image-comment.jpg</code> will look like <code>my image - comment</code>.</blockquote></p>
+				<p>Picasa, Photoshop, and other image gallery/editing software will store captions in the IPTC field of a JPEG. If <code>$settings['show_iptc_caption']</code> is set to true, this field will be extracted and displayed with the filename. This lets you caption your images in your favorite image managing software without having to mess with the filenames. For iPhoto users, look at something called Caption Buddy or search for exporting iPhoto pictures with IPTC captions embedded.</p>
+			</li>
+		
+			<li>
+				<h3>Change text in the gallery</h3>
+				<p>If you want to change any text on the gallery, look for it in the language files, inside <code>/languages/</code> directory</p>
+			</li>
+		
+			<li>
+				<h3>Integrating your gallery with your site</h3>
+				<p>If you want to add html code to let your gallery look like your site, you can add it in the Header/Footer files. Open the <code>/add_header.php</code> and add al the Header code (the code that goes on top of the gallery), and do the same with the <code>/add_footer.php</code> for the Footer code (the code that goes below the gallery). Follow the instructions on the files for adding the code. Then add the CSS definitions for the Header/Footer html in the <code>/styles/includes.css</code> css file.
+				<blockquote>Note: When adding to the <code>/styles/includes.css</code>, be careful with the CSS id/class naming, as if some conflict with the minishowcase css definitions, your gallery's look might suffer some problems.</blockquote></p>
+			</li>
+		</ul>
+		
+		
+		<a name="customisation"></a>
+		<h2>Customisation <a href="#top">^</a></h2>
+		
+		<p>minishowcase is supplied with a generic set of default values that can be customised to work better within your own site. Most of the variables for the working of the gallery are contained in the <code>/config/settings.php</code> file. This means that you can change many of the features by editing just one file.</p>
+		
+		<p>At this stage, customisation is still at a minimum level. Expect improved and more thorough customisation in the (near) future.</p>
+		
+		<p>There are <code>/*comments*/</code> throughout to assist with site redesigns.</p>
+		<p></p>
+		
+		
+		<a name="themes"></a>
+		<h2>Themes <a href="#top">^</a></h2>
+		
+		<blockquote>Note: themes are now working again. Be aware that <strong>old themes are not compatible</strong> with the latest release of minishowcase Luckily, they're easily upgradeable. Just duplicate a new theme, copy the values of your old theme and add the missing ones accordingly. Please check afterwards since some values might have change their appearance.</blockquote>
+		
+		<p>Themes are preconfigured visual styles and they include overall color scheme and images. They're a good way to adapt (for now, colors and images) minishowcase to resemble more your website's appearance.</p>
+		
+		<p>Themes are contained within the <code>/themes/</code> folder. To make your own theme, just copy one of the provided ones, modify the images and the colors in the <code>/themes/data.php</code> file. Then rename the theme's folder (it acts as the theme's name)</p>
+		
+		<p>Themes included in the minishowcase download:</p>
+		<ul>
+		<li>default theme by victor</li>
+		<li>blue theme by victor</li>
+		</ul>
+		
+		<p>Other themes available for download:</p>
+		<ul><li>none yet</li></ul>
+		
+		<p>If you make a new theme, and want to share it with the rest of us, send a <code>.zip</code> compressed copy to <a href="mailto:minishowcase@frwrd.net">minishowcase@frwrd.net</a> and it may be showcased in the themes section. Please include all relevant information, including:</p>
+		
+		<ol class="list"><li>Your name</li>
+		<li>Name of the theme</li>
+		<li>Your e-mail <em>[optional]</em></li>
+		<li>A site you want the theme to be linked to <em>[optional]</em></li>
+		</ol>
+		
+		
+		<a name="troubleshooting"></a>
+		<h2>Troubleshooting</h2>
+
+			<h3>Encoding issues (Characters looking strange or wrong)</h3>
+
+			<p><i>If the gallery names are looking funny or weird, and/or some characters look erroneous, or the galleries just don't load at all and you're using non-ASCII characters in the gallery names:</i></p>
+
+			<p>Open <code>/config/settings.php</code> and set <code>$settings['set_double_encoding']</code> to <code>true</code> (default is <code>false</code>, if yours is <code>false</code>, then set it to <code>true</code>).</p>
+				
+			
+			<h3>Cached Thumbnails Automated Creation</h3>
+
+			<p>Open the <code>/galleries/index.php</code> file and set <code>$thumbnail_creation</code> to <code>true</code>. Then go to <code>http://your-gallery/galleries/?thumbnails</code> and voilà! you can create thumbnails for every gallery.</p>
+
+			<p>Thumbnails will be created with the size set in <code>/config/settings.php</code> under <code>$settings['cached_thumbs_size']</code>. Change this value if you want better (or less) quality/size images. Default is 128px as max size, so for square thumbs is 128x128px, and for real aspect ratio (no square) is 128px max for the larger side.</p>
+
+			<p>If you decide to change the way your images show (by changing <code>$settings['square_thumbnails']</code>) then you might have to rebuild the cached thumbs for them to keep the selected aspect ratio (square vs. real aspect ratio).</p>
+
+			<p><b>NOTE: In some cases, you might have to delete the thumbnails manually through FTP since the script might not be able to delete the thumbnails due to PHP strict file handling permissions</b>.</p>
+
+			<p>Please remember to set <code>$thumbnail_creation</code> back to <code>false</code> in order to avoid other people recreating all your thumbnails!</p>
+
+
+			<h3>Images not showing in IIS Windows server</h3>
+
+			<p>Open the /config/settings.php file and change in line 243:</p>
+			
+			<blockquote><code>$settings['gallery_sorting'] = 4; //2 <-- CHANGE TO "4"
+			$settings['thumbnail_sorting'] = 0; //6 <-- CHANGE TO "0"
+			</code></blockquote>
+			
+			<p><strong>This seems to be the solution if you're getting an error on line 822</strong> as discussed in <a href="http://minishowcase.frwrd.net/community/comments.php?DiscussionID=127">this thread</a></p>
+
+			<p>That should help and make thumbnails show. If that does not solve your problem, or if you want more information, <a href="http://minishowcase.frwrd.net/community/comments.php?DiscussionID=114&page=1">read and post on this thread</a></p>
+			
+			<h3>Advanced settings</h3>
+			<p><small><b>(Not supported <b>AT ALL</b>, use at your own risk)</b></small></p>
+			
+			<p>On the first lines of the <code>/libraries/ajax.init.js</code> file, you'll find some advance settings:</p>
+				
+			<ul>
+				<li>
+					<p>If you don't want to jump to the next gallery block when you are at the last image and click the arrow, set this to <code>false</code>
+					<blockquote><code>// jump from last block image to next block first image
+					var continuous_nav = true;
+					</code></blockquote></p>
+				</li>
+			
+				<li>
+					<p>If you set to <code>true</code> all images will be load simultaneously. It'll slightly accelerate thumbnail loading but it might crash or block the browser on galleries with many thumbnails.
+					<blockquote><code>// load thumbnails one by one
+					var use_load_interval = true;
+					</code></blockquote></p>
+				</li>
+
+				<li>
+					<p>If you don't want to show the AJAX loader bar, set this to <code>false</code>
+					<blockquote><code>// show ajax loader
+					var show_loading_bar = true;
+					</code></blockquote></p>
+				</li>
+
+				<li>
+					<p>Set to <code>true</code> if you want the minishowcase Preview pane to animate (fade in/out) when showing an image
+					<blockquote><code>// animate preview pane show/hide
+					var animate_preview = false;
+					</code></blockquote></p>
+				</li>
+
+				<li>
+					<p>Set to <code>true</code> if you want to go right directly to the permalink URL when you click on the 'permalink' link (Does not work right, use at your own risk)
+					<blockquote><code>// clicking on permalink loads it directly
+					var active_permalink = false;
+					</code></blockquote></p>
+				</li>
+
+				<li>
+					<p>This one is just for debugging purposes. Do not change it.
+					<blockquote><code>// resize the thumbnail container
+					var set_thumbnail_container_height = false;
+					</code></blockquote></p>
+				</li>
+
+				<li>
+					<p>Set to <code>true</code> if you want visited galleries to change color
+					<blockquote><code>// set visited galleries to 'visited' color
+					var show_visited_galleries = false;
+					</code></blockquote></p>
+				</li>
+			</ul>
+		
+		<p>If you need help and your issue is not described here, please <a href="http://minishowcase.frwrd.com/community/">post your issue in the community forums</a></p>
+		
+		
+		<a name="contact"></a>
+		<h2>Contact <a href="#top">^</a></h2>
+		
+		<p>Any doubt, information or request might be discussed in the <a href="http://minishowcase.frwrd.net/community/">community</a>. I am oftentimes very busy, a freelancer that travels from time to time, and it may happen that I don't check the threads immediately, but do not doubt that your suggestions and requests will be taken into consideration and a prompt answer is likely to be delivered.</p>
+		
+		<blockquote>IMPORTANT: Please read this INSTRUCTIONS thoroughly before sending any complaint/bug/feature request. If you don't receive an answer to your post or email, chances are the answer has already been covered here and I just cannot be bothered to rewrite it.</blockquote>
+		
+		
+		<a name="disclaimer"></a>
+		<h2>Disclaimer <a href="#top">^</a></h2>
+		
+		<p>This program is freeware, you may use it at your own discretion, If you want, you can write to me and tell me where are you using it, just to check it out.</p>
+		
+		<p>This program is in a very alpha version, I am only distributing it because it is such a simple gallery, it might be useful to others. The web is full of full-fledged, perfectly-functional php image galleries, this one is for those that want an extremely simple, easy yet powerful and configurable gallery. If you're learning php, this is a very nice place where to start. And, after all, it is offered at no cost.</p>
+		
+		
+		<a name="legal"></a>
+		<h2>Legal stuff <a href="#top">^</a></h2>
+		<blockquote><strong>This software is provided 'As Is', and no implied warranties are to be considered in any way watsoever, not even the implied warranty of FITNESS OF MERCHANTABILITY OR FOR A PARTICULAR PURPOSE. It is free, you can do whatever you want with it, it is safe, it is just server scripting code, that should be enough. By downloading this software you are deemed to this agreement.</strong></blockquote>
+		
+		<h1>&nbsp;</h1>
+		
+		<h1 class="title"><small><a href="http://minishowcase.frwrd.net" title="minishowcase">minishowcase</a> | <a href="http://minishowcase.frwrd.net/community" title="community">community</a> | <a href="http://frwrd.net" title="frwrd.net">frwrd.net</a></small></h1>
+		
+		<h1>&nbsp;</h1>
+	</div>
+</body>
+</html>

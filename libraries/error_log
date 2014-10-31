@@ -1,0 +1,1 @@
+[08-Jan-2009 22:53:31] PHP Warning:  imagedestroy(): supplied argument is not a valid Image resource in /home/enriqueg/public_html/briancbecker/minishowcase/libraries/thumb.display.php on line 254

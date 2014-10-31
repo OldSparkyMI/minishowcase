@@ -1,0 +1,45 @@
+/**** IE PC tag definitions ****/
+
+#msc_thumbs {
+	float: left;
+	margin-left: 0px;
+}
+
+#msc_image {
+	background: none !important;
+}
+
+#msc_image #image_bg,
+html>body #msc_image #image_bg {
+	background-color: none !important;
+}
+
+#nav_container {
+	clear: both !important;
+}
+
+#image_menu #nav_thumbs #navthumb a img.th,
+#image_menu #nav_thumbs #navthumb a img.sel {
+	margin: 0px !important;
+}
+
+#thumbs_cont ul li a img.thumb_loader,
+#thumbs_cont ul li a img.thumb_img {
+	margin-top: 3px !important;
+	margin-left: 3px !important;
+}
+
+#image_header #image_title {
+	padding-top: 2px !important;
+}
+
+#thumbs_cont ul li {
+	margin: 0px 4px 8px 0px !important;
+}
+
+#msc_menu ul li a,
+#msc_menu ul li a:link,
+#msc_menu ul li a:active,
+#msc_menu ul li a:visited {
+	border: none !important;
+}
