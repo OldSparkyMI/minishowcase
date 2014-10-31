@@ -1,4 +1,5 @@
 Fork of MiniShowCase from http://minishowcase.net/ v09b142
+
 minishowcase is a small and simple php/javascript online photo gallery, 
 powered by AJAX that allows you to easily show your images online,
 without complex databases or coding, allowing to have an up-and-running
