@@ -66,6 +66,8 @@
 	<!-- END CPAINT:JSRS -->
 	
 	<!-- START AJAX SCRIPTS -->
+        <!-- add php settings values to js -->
+        <script type="text/javascript">settings = {};<?php foreach($settings as $key => $value) {echo 'settings["'.$key.'"]="' . $value . '";';};?></script>
 	<script src="libraries/script.loader.php?load=init" type="text/javascript"></script>
 	<script src="libraries/ajax.functions.js" type="text/javascript"></script>
 	<!-- END AJAX SCRIPTS -->

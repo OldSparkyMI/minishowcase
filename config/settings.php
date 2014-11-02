@@ -209,6 +209,14 @@
 	 * VALUES: [ <filename> ] */
 	$settings['info_file'] = '_info.txt';
 	
+        /**
+         * Define your gallery type here:
+         * VALUES: ['tree','default','expanded']
+         * tree = tree view like an file system explorer
+         * default = view of the normal minishowcase
+         * expanded = default view with indent subdirectories
+         */
+        $settings['gallery_type'] = 'expanded'; 
 	
 	/*show/hide images from subdirectories (will be treated as individual galleries in the sorting)
 	 * VALUES: [ true | false ]
@@ -217,10 +225,8 @@
 	
 	/*show/hide galleries that have no images in them (quite probable if you have the above setting enabled)
 	 * VALUES: [ true | false ]
-	 * useful if you have "Traveling/Europe 2008/Rome" gallery, but the "Traveling" directory has no photos*/
-        
-        /* have to be true right now!!!!, because of the new tree view */
-        /* @ToDo change this! */
+	 * useful if you have "Traveling/Europe 2008/Rome" gallery, but the "Traveling" directory has no photos
+         * you should enable this if you are using gallery_type tree or expanded !!!!! */
 	$settings['show_empty_galleries'] = true;	
 	
 	
