@@ -24,6 +24,7 @@ gallery in a few minutes.
     - FLV Support
 - Implement download functionallity 
 - Checkout http://people.via.ecp.fr/~jm/minishowcase-jm.html
+- Correct Subdirectory image count
 
 @ChangeLog
  - v2014-12-22-2:
