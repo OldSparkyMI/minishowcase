@@ -155,14 +155,7 @@
 	 * NOTE: used only if $settings['scale_big_images'] is set to true */
 	$settings['large_image_quality'] = 80;
 	
-	
-	/* MAKE THE MAIN GALLERY MENU SCROLLABLE
-	 * VALUES: [ true | false ]
-	 * use if you have many galleries and
-	 * your menu gets too long */
-	$settings['scroll_menu'] = false; /* DOES NOT CURRENTLY WORK */
-	
-	
+        
 	
 	/**** GALLERY SETTINGS ***************************************/
 	
@@ -216,7 +209,7 @@
          * default = view of the normal minishowcase
          * expanded = default view with indent subdirectories
          */
-        $settings['gallery_type'] = 'expanded'; 
+        $settings['gallery_type'] = 'tree'; 
 	
 	/*show/hide images from subdirectories (will be treated as individual galleries in the sorting)
 	 * VALUES: [ true | false ]
@@ -229,7 +222,16 @@
          * you should enable this if you are using gallery_type tree or expanded !!!!! */
 	$settings['show_empty_galleries'] = true;	
 	
-	
+	/**
+         * Display ZIP Files in the galleries
+         * Content will be unzipped, so this uses some cpu and memory!
+         * VALUES: [ true | false ]
+         * 
+         * Ensure the zip extension is enabled.
+         * IMPORTANT: You need php with zip support!!!!!!
+         * extension=zip.so
+         */
+        $settings['include_zip_files'] = true;
 	
 	
 	/**** IMAGE & THUMBNAIL HANDLING *************************************/

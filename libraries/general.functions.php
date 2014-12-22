@@ -189,8 +189,10 @@
 				sort($files);
 		}
 		
-		if ($sort_flag) return $files;
-		else return 'null';
+		if ($sort_flag) {
+                    return $files;
+                }
+                return 'null';
 	}
 	
 	
@@ -423,5 +425,82 @@
 		}
 		return false;
 	}
+        
+        // Checks if zip support can be enabled
+        // and checks if zip support should be enabled
+        function isZIPActivated(){
+            global $settings;
+            return extension_loaded("zip") && $settings['include_zip_files'];
+        }
+        
+        // Returns true if the filename/file is a zip file
+        function isZIPFile($filename){
+            $file = new SplFileInfo($filename);
+            if ($file->getExtension() === "zip"){
+                return true;
+            }
+            return false;
+        }
+        
+        // Counts the available images/video files in the zip file
+        function countZIPFileContent($pathToZIPFile){
+            return count(getZIPFileContent($pathToZIPFile));
+        }
+        
+        // returns all video  and image files from the zip
+        // directories remains!
+        function getZIPFileContent($pathToZIPFile){
+            global $settings;
+            $availableFiles = array();
+            $za = new ZipArchive(); 
+            $za->open($pathToZIPFile);
+            for( $i = 0; $i < $za->numFiles; $i++ ){
+                $stat = $za->statIndex( $i );
+                //only allow files supported by the allowed_extendsions settings
+                if (in_array(strtolower((pathinfo($stat['name'])["extension"])), $settings['allowed_extensions'])){
+                    $availableFiles[] = $stat['name'];
+                }
+            }
+            $za->close();
+            return $availableFiles;
+        }
+        
+        function getDirectoryFileContent($pathToDirectory){
+            global $settings;
+            $files = array();
+            $dh = opendir($pathToDirectory);
+            if (!is_null($dh)) {
+                // iterate over file list & output all filenames
+                while (($filename = readdir($dh)) !== false) {
+                    $pinfo = pathinfo($filename);
+                    if ((strpos($filename,"_") !== 0)
+                    && (strpos($filename,".") !== 0)
+                    && (in_array(strToLower($pinfo["extension"]),$settings['allowed_extensions']))
+                    ) {
+                            $full_filename = "$base_path/galleries/$id/$filename";
+
+                            // Check that this is not a thumbnail for an FLV file
+                            if (isFLVThumbnail($full_filename))
+                                    continue;
+
+                            $files[] = $filename;
+                    }
+                }
+                // close directory
+                closedir($dh);
+            }
+            
+            return $files;
+        }
+        
+        // creates a directory, sets std minishowcase rights (not changed)
+        // ToDo: dummy rights - change it!
+        function createDirectory($pathToDirectory){
+            $mthd = mkdir($pathToDirectory, 0777);
+            if ($mthd) {
+                    @chmod($pathToDirectory, 0777);
+                    @chown($pathToDirectory, fileowner($_SERVER["PHP_SELF"]));
+            }
+        }
 	
 ?>

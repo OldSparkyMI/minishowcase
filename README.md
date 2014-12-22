@@ -15,18 +15,32 @@ gallery in a few minutes.
 - Further based on http://www.briancbecker.com/blog/projects/minishowcase-mod/ v09b142
 
 @Icons
- - Plus/Minus Icon from http://www.famfamfam.com/
+- Plus/Minus Icon from http://www.famfamfam.com/
 
 @ToDos & upcomming features:
- - add in #galleries_menu a class to set the style for tree or the default view
-   and change the styles!
- - TreeView optimizations
-    - click on +/- will open/close the folder
- - BuildIn Zip-Support
+- rotate Thumbnails in preview
+- BuildIn Zip-Support
     - Zip-File should be treated as a normal directory
- - Checkout http://people.via.ecp.fr/~jm/minishowcase-jm.html
+    - FLV Support
+- Implement download functionallity 
+- Checkout http://people.via.ecp.fr/~jm/minishowcase-jm.html
 
 @ChangeLog
+ - v2014-12-22:
+    - [unread] ZIP support
+      This comit is for backup purpose
+      If you activate ZIP support in the settings.php you will currently see
+        - ZIP-Files as directory
+        - ZIP-File image count
+        - Preview/thumbnails won't work
+ - v2014-11-05:
+   - not for use!!!
+   - Bugfixes
+   - add in #galleries_menu a class to set the style for tree or the default view
+   and change the styles!
+   - TreeView optimizations
+   - click on +/- will open/close the folder
+
  - v2014-11-02:
    - Reenable $settings['show_empty_galleries'] = true;
    - More Galleryviews:

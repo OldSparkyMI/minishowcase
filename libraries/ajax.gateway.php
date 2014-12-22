@@ -69,7 +69,7 @@
 	{
 		global $settings;
 		global $base_path;
-		
+                
 		$galleries = array();
 		
 		// open directory and parse file list
@@ -80,29 +80,28 @@
 				if ((strpos($filename,".") !== 0)
 					&& (strpos($filename,"_") !== 0)
 					&& (is_dir("$base_path/$folder/$filename"))
+                                        || isZIPFile($filename) && isZIPActivated()
 					) {
 						// Ignore if this is an FLV thumbnail, we'll display the thumbnail for the FLV video
 						if (isFLVThumbnail("$base_path/$folder/$filename"))
-							continue;
+                                                    continue;
 						
 						$galleries[] = $filename;
-						
+                                                
 						// We can optionally scan sub-directories too
-						if ($settings['show_sub_galleries'])
-						{
-							$subs = scan_galleries("$folder/$filename");
-							foreach ($subs as $sub) {
-								$galleries[] = "$filename/$sub";
-							}
+						if ($settings['show_sub_galleries']){
+                                                    // scan recursively the galleries
+                                                    $subs = scan_galleries("$folder/$filename");
+                                                    foreach ($subs as $sub) {
+                                                            $galleries[] = "$filename/$sub";
+                                                    }                                                    
 						}
 				}
 			}
 			// close directory
 			closedir($dh);
 			
-		}
-		else
-		{
+		} else {
 			return $galleries;
 		}
 		
@@ -131,7 +130,12 @@
 		
 		if ($galleries != 'null') {
 			foreach ($galleries as $key => $filename) {
-				$gallery_files = count(scanDirImages("$base_path/galleries/$filename"));
+                            $gallery_files = 0;
+                            if (isZIPFile($filename)){
+                                $gallery_files = countZIPFileContent("$base_path/galleries/$filename");
+                            }else{
+                                $gallery_files = count(scanDirImages("$base_path/galleries/$filename"));
+                            }
 				if ($settings['show_empty_galleries'] || $gallery_files > 0)
 				{
 					$password = password_exists($base_path, $filename, $settings['password_filename']);
@@ -176,79 +180,58 @@
 		global $settings;
 		global $thumbnail_max_size;
 		global $base_path;
-		
+                
 		$_double = $settings['set_double_encoding'];
 		
 		$id = ($_double) ? Url_decode($_id) : rawurldecode($_id);
-			
+                
 		$all_thumbs = array();
 		$exif_date = array();
 		$thumbs = array();
 		$names = array();
-		
+                
 		// set directory name
 		$dir = "$base_path/galleries/$id";
-		
+                
 		// if thumbnails
 		$th_dir = "$base_path/cache/".$settings['gallery_prefix'].$id;
 		if (($settings['cache_thumbnails']) && (!is_dir($th_dir))) {
-			if ($settings['show_sub_galleries'])
-			{
-				// Recursively create the sub directories for caching the images
-				$folders = split("/", $id);
-				$th_dir = "$base_path/cache/".$settings['gallery_prefix'];
-				foreach ($folders as $f)
-				{
-					$th_dir .= "$f/";
-					$mthd = mkdir($th_dir, 0777);
-					if ($mthd) {
-						@chmod($th_dir, 0777);
-						@chown($th_dir, fileowner($_SERVER["PHP_SELF"]));
-					}
-				}
-			}
-			else
-			{
-				$mthd = mkdir($th_dir, 0777);
-				if ($mthd) {
-					@chmod($th_dir, 0777);
-					@chown($th_dir, fileowner($_SERVER["PHP_SELF"]));
-				}
-			}
+                    if ($settings['show_sub_galleries'])
+                    {
+                        // Recursively create the sub directories for caching the images
+                        $folders = split("/", $id);
+                        $th_dir = "$base_path/cache/".$settings['gallery_prefix'];
+                        foreach ($folders as $f)
+                        {
+                            $th_dir .= "$f/";
+                            createDirectory($th_dir);
+                        }
+                    }
+                    else {
+                        createDirectory($th_dir);
+                    }
 		}
 		
 		// open directory and parse file list
 		$num = 0;
-		if ($dh = opendir($dir)) {
-			// iterate over file list & output all filenames
-			while (($filename = readdir($dh)) !== false) {
-				$pinfo = pathinfo($filename);
-				if ((strpos($filename,"_") !== 0)
-				&& (strpos($filename,".") !== 0)
-				&& (!in_array($filename, $hidden_files))
-				&& (in_array(strToLower($pinfo["extension"]),$settings['allowed_extensions']))
-				) {
-					$full_filename = "$base_path/galleries/$id/$filename";
-					
-					// Check that this is not a thumbnail for an FLV file
-					if (isFLVThumbnail($full_filename))
-						continue;
-						
-					$all_thumbs[] = $filename;
-				}
-			}
-			// close directory
-			closedir($dh);
+                //is zip?
+                if (isZIPFile($dir)){
+                    if (isZIPActivated()){
+                        $all_thumbs = getZIPFileContent($dir);
+                    }
+                }else{
+                    //normal directory
+                    $all_thumbs = getDirectoryFileContent($dir);
 		}
-			
+                //return_encoded("$o", utf8);return;
 		$all_thumbs = sortFiles($all_thumbs, $settings['thumbnail_sorting'], "$base_path/galleries/$id/");
 		
 		if ($all_thumbs != 'null') {
-			for ($num=0; $num<count($all_thumbs); $num++) {
-				if ($num >= $th_min && $num <= $th_max) {
-					$thumbs[] = $all_thumbs[$num];
-				}
-			}
+                    for ($num=0; $num<count($all_thumbs); $num++) {
+                            if ($num >= $th_min && $num <= $th_max) {
+                                    $thumbs[] = $all_thumbs[$num];
+                            }
+                    }
 		} else {
 			$output = "error with sorting ("+$settings['thumbnail_sorting']+")";
 			$encoding = ($_double) ? "url" : "raw";
@@ -256,8 +239,9 @@
 			exit;
 		}
 		
+                //use less????
 		$names = $thumbs;
-		
+		echo count($thumbs);
 		if (count($thumbs)>0) {
 			
 			$output = "";
