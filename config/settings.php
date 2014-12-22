@@ -33,7 +33,7 @@
 
 
 	
-	/*** MENU VARIABLES ****************************************/
+	/*** MENU VARIABLES ***r*************************************/
 	
 	
 	/* use select menu instead of lateral gallery menu
@@ -158,8 +158,10 @@
         
         /* Rotates the thumbnails after there exif data
          * VALUES: true | false 
-         * NOTE: you have to enable exif in php
-         * e.g.: extension=exif.so */
+         * NOTE: in some cases you have to enable exif in php
+         * ubuntu 14.04 comes with exif support out of the box (afaik)
+         * arch/manjaro you have to enable it in php.ini via: extension=exif.so
+         */
         $settings['rotate_thumbnails'] = true;
 	
 	/**** GALLERY SETTINGS ***************************************/
