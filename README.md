@@ -9,6 +9,7 @@ gallery in a few minutes.
  - TreeView for the gallery directories
  - IPTC Captions from http://www.briancbecker.com/blog/projects/minishowcase-mod/
  - FLV Support from http://www.briancbecker.com/blog/projects/minishowcase-mod/
+ - Rotates thumbnails after exif data
 
 @BasedOn
 - Original based on http://minishowcase.net/ v09b142
@@ -18,7 +19,6 @@ gallery in a few minutes.
 - Plus/Minus Icon from http://www.famfamfam.com/
 
 @ToDos & upcomming features:
-- rotate Thumbnails in preview
 - BuildIn Zip-Support
     - Zip-File should be treated as a normal directory
     - FLV Support
@@ -26,6 +26,9 @@ gallery in a few minutes.
 - Checkout http://people.via.ecp.fr/~jm/minishowcase-jm.html
 
 @ChangeLog
+ - v2014-12-22-2:
+    - [unread] ZIP support (untouched)
+    - rotate thumbnails automatically from exif data
  - v2014-12-22:
     - [unread] ZIP support
       This comit is for backup purpose

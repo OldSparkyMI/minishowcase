@@ -156,6 +156,11 @@
 	$settings['large_image_quality'] = 80;
 	
         
+        /* Rotates the thumbnails after there exif data
+         * VALUES: true | false 
+         * NOTE: you have to enable exif in php
+         * e.g.: extension=exif.so */
+        $settings['rotate_thumbnails'] = true;
 	
 	/**** GALLERY SETTINGS ***************************************/
 	

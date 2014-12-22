@@ -187,14 +187,35 @@
 			//// copy image ////
 			if (($img_type == "JPG") && (imagetypes() & IMG_JPG)) {
 				$image = imagecreatefromjpeg($img_load);
-				
 			} else if (($img_type == "GIF") && (imagetypes() & IMG_GIF)) {
 				$image = imagecreatefromgif($img_load);
-				
 			} else if (($img_type == "PNG") && (imagetypes() & IMG_PNG)) {
 				$image = imagecreatefrompng($img_load);
-				
 			}
+                        
+                        //// rotate thumbnail after exif data ////
+                        if ($settings['rotate_thumbnails'] == true && $image && function_exists('exif_read_data')){
+
+                            // get exif information
+                            $exif = exif_read_data($img_load);
+                                                        
+                            // switch after orientation
+                            if (!empty($exif['Orientation'])){
+                                switch ($exif['Orientation']){
+                                    case 3:
+                                        $image = imagerotate($image, 180, 0);
+                                        break;
+
+                                    case 6:
+                                        $image = imagerotate($image, -90, 0);
+                                        break;
+
+                                    case 8:
+                                        $image = imagerotate($image, 90, 0);
+                                        break;
+                                }
+                            }
+                        }
 		} else {
 			$error_msg = "!! BAD IMG";
 		}
@@ -235,13 +256,12 @@
 		
 	}
 	
-	
 	$thumb_url = $cache_thumb_dir."/"
 		.$_prefix
 		.basename($img);
 		
 	if ($unlink) $delete = @unlink($thumb_url);
-	
+        
 	if ($cache_thumb) {
 		$thumbCreated = imagejpeg($thumb, $thumb_url, $img_quality);
 	}
