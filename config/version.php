@@ -1,4 +1,4 @@
 <?php
-	$version = "v2014-11-02";
+	$version = "v2014-12-22-2";
 	if(isset($_GET['version'])) print(htmlentities($version));
 ?>
