@@ -25,6 +25,7 @@ gallery in a few minutes.
 - Implement download functionallity 
 - Checkout http://people.via.ecp.fr/~jm/minishowcase-jm.html
 - Correct Subdirectory image count
+- HTML5 Video support
 
 @ChangeLog
  - v2014-12-22-2:
