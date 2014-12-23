@@ -22,7 +22,7 @@ gallery in a few minutes.
 * BuildIn Zip-Support
   * Zip-File should be treated as a normal directory
   * FLV Support
-* Implement download functionallity 
+* Implement download functionality 
 * Checkout http://people.via.ecp.fr/~jm/minishowcase-jm.html
 * Correct Subdirectory image count
 * HTML5 Video support
