@@ -119,7 +119,7 @@ require_once("ImageHelper.php");
         // in img_load is the path to the image
         // so init our ThumbnailHelper
         $imageHelper = new ImageHelper($img_load, $settings);
-       
+        
 	if ($imageHelper->isImageUsable()) {
 		
             //// resize image ////

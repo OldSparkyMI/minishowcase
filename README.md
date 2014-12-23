@@ -28,6 +28,8 @@ gallery in a few minutes.
 * HTML5 Video support
 
 #ChangeLog
+* v2014-12-23:
+  * fixed encoding problem via html special chars (e.g. german umlauts (ö,ä,ü,ß))
 * v2014-12-22-2:
   * [unread] ZIP support (untouched)
   * rotate thumbnails automatically from exif data

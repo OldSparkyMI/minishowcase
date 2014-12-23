@@ -63,12 +63,12 @@ class ImageHelper {
      * @param type $path
      */
     function __construct($path, $settings) {
-        $this->path = $path;
+        $this->path = html_entity_decode($path);
         $this->settings = $settings;
         
         //// get image size ////
         if ($this->imageFileExists()){
-            $this->img_info = getimagesize($path);
+            $this->img_info = getimagesize($this->path);
         }
     }
 
