@@ -435,8 +435,8 @@
         
         // Returns true if the filename/file is a zip file
         function isZIPFile($filename){
-            $file = new SplFileInfo($filename);
-            if ($file->getExtension() === "zip"){
+            $file = new SplFileInfo($filename);            
+            if ($file->getExtension() === "zip" && file_exists($filename)){
                 return true;
             }
             return false;

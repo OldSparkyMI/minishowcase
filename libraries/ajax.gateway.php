@@ -80,7 +80,7 @@
 				if ((strpos($filename,".") !== 0)
 					&& (strpos($filename,"_") !== 0)
 					&& (is_dir("$base_path/$folder/$filename"))
-                                        || isZIPFile($filename) && isZIPActivated()
+                                        || isZIPFile("$base_path/$folder/$filename") && isZIPActivated()
 					) {
 						// Ignore if this is an FLV thumbnail, we'll display the thumbnail for the FLV video
 						if (isFLVThumbnail("$base_path/$folder/$filename"))
@@ -127,11 +127,12 @@
 		
 		//// sort files
 		$galleries = sortGalleries($galleries, $sorting);
-		
+                
 		if ($galleries != 'null') {
 			foreach ($galleries as $key => $filename) {
                             $gallery_files = 0;
-                            if (isZIPFile($filename)){
+                            
+                            if (isZIPFile("$base_path/galleries/$filename")){
                                 $gallery_files = countZIPFileContent("$base_path/galleries/$filename");
                             }else{
                                 $gallery_files = count(scanDirImages("$base_path/galleries/$filename"));

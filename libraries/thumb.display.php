@@ -1,40 +1,19 @@
 <?php
 
- /**
+require_once("ImageHelper.php");
+
+/**
   * THUMBS DISPLAY
   */
 
 	//// import init file ////
 	require_once("general.bootstrap.php");
 	
-	error_reporting(E_ALL);
-	
 	//// debug mode
 	$th_debug_flag = false;//$settings['thumbnail_debug'];
 	
 	$error_msg = '';
 	$center_image = true;
-	
-	$img_types = array(
-		"",
-		"GIF",
-		"JPG",
-		"PNG",
-		"SWF",
-		"PSD",
-		"BMP",
-		"TIFF",
-		"TIFF",
-		"JPC",
-		"JP2",
-		"JPX",
-		"JB2",
-		"SWC",
-		"IFF",
-		"WBMP",
-		"XBM",
-		"FLV"
-	);
 	
 	// debug
 	$th_debug = (isset($settings['thumbnail_debug']))
@@ -119,7 +98,7 @@
 		.$current_gallery;	
 	
 	$img_load = $img;
-	
+        
 	// If we have a flash video, see first if we have a thumbnail to go with it
 	if (strpos(strtolower($img), "flv") !== FALSE)
 	{
@@ -137,89 +116,61 @@
 		}
 	}
 	
-	if ($img_load && file_exists($img_load)) {
+        // in img_load is the path to the image
+        // so init our ThumbnailHelper
+        $imageHelper = new ImageHelper($img_load, $settings);
+       
+	if ($imageHelper->isImageUsable()) {
 		
-		//// get image size ////
-		$img_info = getimagesize($img_load);
-		
-		if ($img_info) {
-			
-			//// resize image ////
-			$img_type = $img_types[$img_info[2]];
-			$th_w = $img_info[0];
-			$th_h = $img_info[1];
-			$move_w = $move_h = 0;
-			$w = $h = 0;
-			
-			if ($th_w >= $th_h) {
-				
-				//// Landscape Picture ////
-				if ($sq) {
-					$h = $img_maxsize;
-					$w = (($th_w * $h) / $th_h);
-					$move_w = (($th_w - $th_h) / 2);
-					$w = $img_maxsize;
-					$th_w = $th_h;
-				} else {
-					$w = $img_maxsize;
-					$h = (($th_h * $w) / $th_w);
-				}
-				
-			} else {
-				
-				//// Portrait Picture ////
-				if ($sq) {
-					$w = $img_maxsize;
-					$h = (($th_h * $w) / $th_w);
-					$move_h = (($th_h - $th_w) / 2);
-					$h = $img_maxsize;
-					$th_h = $th_w;
-				} else {
-					$h = $img_maxsize;
-					$w = (($th_w * $h) / $th_h);
-				}
-			}
-			
-			//// create image ////
-			$thumb = imagecreatetruecolor($w, $h);
-			imagefill($thumb, 255, 255, 255);
-			
-			//// copy image ////
-			if (($img_type == "JPG") && (imagetypes() & IMG_JPG)) {
-				$image = imagecreatefromjpeg($img_load);
-			} else if (($img_type == "GIF") && (imagetypes() & IMG_GIF)) {
-				$image = imagecreatefromgif($img_load);
-			} else if (($img_type == "PNG") && (imagetypes() & IMG_PNG)) {
-				$image = imagecreatefrompng($img_load);
-			}
-                        
-                        //// rotate thumbnail after exif data ////
-                        if ($settings['rotate_thumbnails'] == true && $image && function_exists('exif_read_data')){
+            //// resize image ////
+            $th_w = $imageHelper->getThumbnailWidth();
+            $th_h = $imageHelper->getThumbnailHeight();
+            $move_w = $move_h = 0;
+            $w = $h = 0;
 
-                            // get exif information
-                            $exif = exif_read_data($img_load);
-                                                        
-                            // switch after orientation
-                            if (!empty($exif['Orientation'])){
-                                switch ($exif['Orientation']){
-                                    case 3:
-                                        $image = imagerotate($image, 180, 0);
-                                        break;
+            if ($imageHelper->isLandscape()) {
 
-                                    case 6:
-                                        $image = imagerotate($image, -90, 0);
-                                        break;
+                    //// Landscape Picture ////
+                    if ($imageHelper->isSquare()) {
+                            $h = $img_maxsize;
+                            $w = (($th_w * $h) / $th_h);
+                            $move_w = (($th_w - $th_h) / 2);
+                            $w = $img_maxsize;
+                            $th_w = $th_h;
+                    } else {
+                            $w = $img_maxsize;
+                            $h = (($th_h * $w) / $th_w);
+                    }
 
-                                    case 8:
-                                        $image = imagerotate($image, 90, 0);
-                                        break;
-                                }
-                            }
-                        }
-		} else {
-			$error_msg = "!! BAD IMG";
-		}
-	}
+            } else {
+
+                    //// Portrait Picture ////
+                    if ($imageHelper->isSquare()) {
+                            $w = $img_maxsize;
+                            $h = (($th_h * $w) / $th_w);
+                            $move_h = (($th_h - $th_w) / 2);
+                            $h = $img_maxsize;
+                            $th_h = $th_w;
+                    } else {
+                            $h = $img_maxsize;
+                            $w = (($th_w * $h) / $th_h);
+                    }
+            }
+
+            //// create thumbnail ////
+            $thumb = imagecreatetruecolor($w, $h);
+            imagefill($thumb, 255, 255, 255);
+            
+            // create image and rotate
+            $image = $imageHelper->getImage();
+        } else {
+            $error_msg = "!! BAD IMG";
+            $error = error_get_last();
+            if (is_array($error)){
+                $error_msg .= " - ".$error['message'];
+            }
+        }
+	
 	
 	//// if there's an error reading the original image
 	//// output an error image

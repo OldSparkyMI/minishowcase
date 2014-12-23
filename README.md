@@ -24,7 +24,7 @@ gallery in a few minutes.
   * FLV Support
 * Implement download functionality 
 * Checkout http://people.via.ecp.fr/~jm/minishowcase-jm.html
-* Correct Subdirectory image count
+* Correct subdirectory image count
 * HTML5 Video support
 
 #ChangeLog
