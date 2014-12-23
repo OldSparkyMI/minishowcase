@@ -10,6 +10,7 @@ gallery in a few minutes.
  * IPTC Captions from http://www.briancbecker.com/blog/projects/minishowcase-mod/
  * FLV Support from http://www.briancbecker.com/blog/projects/minishowcase-mod/
  * Rotates thumbnails after exif data
+ * fixed encoding problem from html special chars (e.g. german umlauts (ö,ä,ü,ß))
 
 #BasedOn
 * Original based on http://minishowcase.net/ v09b142
@@ -29,7 +30,7 @@ gallery in a few minutes.
 
 #ChangeLog
 * v2014-12-23:
-  * fixed encoding problem via html special chars (e.g. german umlauts (ö,ä,ü,ß))
+  * fixed encoding problem from html special chars (e.g. german umlauts (ö,ä,ü,ß))
 * v2014-12-22-2:
   * [unread] ZIP support (untouched)
   * rotate thumbnails automatically from exif data
